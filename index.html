@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Malaika Birthday Wish 🎂💖">
+<meta property="og:description" content="A little surprise is waiting for you, Malaika! 🎈🎁">
+<meta name="theme-color" content="#ff4f81">
+<title>Malaika Birthday Wish 🎂💖</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;overflow-x:hidden;
+ font-family:Arial,sans-serif;text-align:center;color:#fff;
+ background:linear-gradient(135deg,#ff1744,#ff80ab,#ff416c);
+}
+.screen{
+ min-height:100vh;display:none;position:relative;z-index:2;
+ padding:35px 16px 60px;align-items:center;justify-content:center;
+ flex-direction:column;
+}
+.screen.active{display:flex}
+h1{font-size:clamp(30px,7vw,48px);text-shadow:0 3px 10px #b00040}
+h2{font-size:clamp(23px,5vw,34px)}
+p{font-size:19px;line-height:1.6}
+button{
+ border:0;border-radius:30px;padding:14px 25px;margin:12px;
+ font-size:17px;font-weight:bold;color:#d50045;background:#fff;
+ box-shadow:0 5px 15px #a0004055;cursor:pointer;
+}
+button:disabled{opacity:.5}
+.balloon{
+ position:fixed;top:-100px;width:32px;height:42px;border-radius:50%;
+ z-index:1;pointer-events:none;animation:fall linear forwards;
+}
+.balloon:after{
+ content:"";position:absolute;bottom:-6px;left:13px;
+ border-left:4px solid transparent;border-right:4px solid transparent;
+ border-top:7px solid currentColor;
+}
+@keyframes fall{
+ from{transform:translateY(-100px) rotate(0)}
+ to{transform:translateY(115vh) rotate(35deg)}
+}
+.special-balloon{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:115px;height:145px;border-radius:50%;margin:12px;
+ cursor:pointer;font-size:35px;background:#ff2e63;
+ box-shadow:inset -9px -8px 0 #b9004c55,0 8px 15px #8a003b55;
+ animation:float 2s ease-in-out infinite alternate;
+}
+.special-balloon:nth-child(2){background:#ffcc00;animation-delay:.3s}
+.special-balloon:nth-child(3){background:#ff79c6;animation-delay:.6s}
+.special-balloon:nth-child(4){background:#ff7043;animation-delay:.9s}
+@keyframes float{to{transform:translateY(-12px) rotate(5deg)}}
+.wish{font-size:19px;font-weight:bold;margin:8px auto;max-width:600px}
+#balloons{max-width:600px}
+.cake{
+ position:relative;width:230px;height:180px;margin:40px auto 25px;
+}
+.cake-top{
+ position:absolute;top:45px;left:15px;width:200px;height:45px;
+ border-radius:50%;background:#ffb6c9;border:4px solid #fff0f5;z-index:3;
+}
+.cake-layer{
+ position:absolute;left:15px;top:65px;width:200px;height:85px;
+ background:repeating-linear-gradient(0deg,#ff78a5 0 18px,#fff0f5 18px 27px);
+ border-radius:0 0 18px 18px;border-bottom:7px solid #e52c68;z-index:2;
+}
+.icing{
+ position:absolute;left:15px;top:60px;width:200px;height:30px;
+ background:#fff0f5;border-radius:12px;z-index:4;
+}
+.berry{
+ position:absolute;width:19px;height:22px;border-radius:60% 60% 70% 70%;
+ background:#e60039;top:52px;z-index:5;
+}
+.berry:nth-child(1){left:43px}
+.berry:nth-child(2){left:88px}
+.berry:nth-child(3){left:133px}
+.berry:nth-child(4){left:176px}
+.candle{
+ position:absolute;top:7px;width:12px;height:43px;
+ background:repeating-linear-gradient(45deg,#fff 0 5px,#ff4081 5px 10px);
+ border-radius:4px;z-index:6;
+}
+.candle:nth-of-type(1){left:65px}
+.candle:nth-of-type(2){left:109px}
+.candle:nth-of-type(3){left:153px}
+.flame{
+ position:absolute;top:-19px;left:0;width:12px;height:18px;
+ background:#ffea00;border-radius:50% 50% 45% 45%;
+ box-shadow:0 0 15px #ffeb3b;animation:flicker .4s infinite alternate;
+}
+@keyframes flicker{to{transform:scale(.8) rotate(5deg)}}
+.cake.cut .cake-layer{clip-path:polygon(0 0,100% 0,100% 100%,70% 100%,50% 55%,30% 100%,0 100%)}
+.confetti{
+ position:fixed;top:-20px;width:9px;height:14px;z-index:10;
+ pointer-events:none;animation:confettiFall 3s linear forwards;
+}
+@keyframes confettiFall{
+ to{transform:translateY(110vh) rotate(720deg);opacity:.8}
+}
+#finalMessage{max-width:700px}
+.small{font-size:15px}
+</style>
+</head>
+<body>
+<div id="screen1" class="screen active">
+ <h1>Welcome, Birthday Girl, Malaika! 💖</h1>
+ <p>A little surprise is waiting for you...</p>
+ <h2>Are you ready? 🎁</h2>
+ <button onclick="startParty()">Tap to Start 🎈</button>
+</div>
+<div id="screen2" class="screen">
+ <h1>Special Balloons for You! 🎈</h1>
+ <p>Tap each balloon yourself to pop it and reveal a wish!</p>
+ <div id="balloons">
+  <div class="special-balloon" onclick="popBalloon(this,0)">🎈</div>
+  <div class="special-balloon" onclick="popBalloon(this,1)">🎈</div>
+  <div class="special-balloon" onclick="popBalloon(this,2)">🎈</div>
+  <div class="special-balloon" onclick="popBalloon(this,3)">🎈</div>
+ </div>
+ <div id="wishes"></div>
+ <button id="nextBtn" style="display:none" onclick="showScreen('screen3')">
+  Open Your Birthday Surprise 🎁
+ </button>
+</div>
+<div id="screen3" class="screen">
+ <h1>Happy Birthday, Malaika! 🎂💖</h1>
+ <p>May your special day be filled with love, laughter and beautiful memories! 🌹</p>
+ <button onclick="showScreen('screen4')">See Your Birthday Cake 🎂</button>
+</div>
+<div id="screen4" class="screen">
+ <h1>A Cake Made Just for You! 🎂</h1>
+ <div class="cake" id="cake">
+  <div class="cake-top"></div>
+  <div class="cake-layer"></div>
+  <div class="icing"></div>
+  <span class="berry"></span><span class="berry"></span>
+  <span class="berry"></span><span class="berry"></span>
+  <div class="candle"><div class="flame"></div></div>
+  <div class="candle"><div class="flame"></div></div>
+  <div class="candle"><div class="flame"></div></div>
+ </div>
+ <p>Make a wish, Malaika! ✨</p>
+ <button id="blowBtn" onclick="blowCandles()">Blow Out the Candles 🕯️</button>
+ <button id="cutBtn" style="display:none" onclick="cutCake()">Cut the Cake! 🍰</button>
+ <button id="finalBtn" style="display:none" onclick="showScreen('screen5')">Your Final Surprise 💌</button>
+</div>
+<div id="screen5" class="screen">
+ <h1>To the Special Birthday Girl! 💖</h1>
+ <h2>Happy Birthday, Malaika! 🎂🌹</h2>
+ <p id="finalMessage">
+  May your life always be filled with happiness, love, success and countless reasons to smile.
+  May all your dreams come true, and may every new day bring you something beautiful.
+  Keep shining and keep smiling, because you deserve all the happiness in the world! 💕
+ </p>
+ <p>Lots of happiness, flowers and love for you! 🌹💐💖</p>
+ <h1>🎉🎂🎈💗🎁🌹</h1>
+</div>
+<script>
+let musicContext=null;
+let musicTimer=null;
+let musicStarted=false;
+let popped=0;
+function showScreen(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+}
+function startParty(){
+ startMusic();
+ showScreen('screen2');
+}
+function startMusic(){
+ if(musicStarted)return;
+ musicStarted=true;
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  musicContext=new AC();
+  const notes=[
+   [392,0.35],[392,0.35],[440,0.7],[392,0.7],[523,0.7],[494,1.2],
+   [392,0.35],[392,0.35],[440,0.7],[392,0.7],[587,0.7],[523,1.2],
+   [392,0.35],[392,0.35],[784,0.7],[659,0.7],[523,0.7],[494,0.7],[440,1.2],
+   [698,0.35],[698,0.35],[659,0.7],[523,0.7],[587,0.7],[523,1.2]
+  ];
+  function playPhrase(){
+   if(!musicContext)return;
+   let t=musicContext.currentTime+0.1;
+   notes.forEach(([freq,dur])=>{
+    const osc=musicContext.createOscillator();
+    const gain=musicContext.createGain();
+    osc.type='sine';osc.frequency.value=freq;
+    gain.gain.setValueAtTime(0.0001,t);
+    gain.gain.exponentialRampToValueAtTime(0.12,t+0.03);
+    gain.gain.setTargetAtTime(0.0001,t+dur-0.06,0.03);
+    osc.connect(gain);gain.connect(musicContext.destination);
+    osc.start(t);osc.stop(t+dur);
+    t+=dur+0.04;
+   });
+   return t-musicContext.currentTime;
+  }
+  async function loop(){
+   if(musicContext.state==='suspended')await musicContext.resume();
+   const duration=playPhrase();
+   musicTimer=setTimeout(loop,duration*1000+500);
+  }
+  loop();
+ }catch(e){}
+}
+function popSound(){
+ try{
+  if(!musicContext)return;
+  const osc=musicContext.createOscillator();
+  const gain=musicContext.createGain();
+  osc.type='triangle';osc.frequency.setValueAtTime(500,musicContext.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(100,musicContext.currentTime+0.12);
+  gain.gain.setValueAtTime(0.2,musicContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001,musicContext.currentTime+0.13);
+  osc.connect(gain);gain.connect(musicContext.destination);
+  osc.start();osc.stop(musicContext.currentTime+0.14);
+ }catch(e){}
+}
+function popBalloon(el,index){
+ if(el.dataset.popped)return;
+ el.dataset.popped='true';
+ popSound();
+ const messages=[
+  'Happy Birthday to You, Malaika! 🎂💖',
+  'Keep Shining, Malaika! ✨🌹',
+  'May Your Life Always Be Filled With Happiness and Love! 💕',
+  'May All Your Dreams Come True, Birthday Girl! 🌟🎁'
+ ];
+ const wish=document.createElement('div');
+ wish.className='wish';
+ wish.textContent=messages[index];
+ document.getElementById('wishes').appendChild(wish);
+ el.style.transition='transform .2s,opacity .2s';
+ el.style.transform='scale(1.5)';
+ el.style.opacity='0';
+ setTimeout(()=>el.remove(),200);
+ popped++;
+ if(popped===4)document.getElementById('nextBtn').style.display='inline-block';
+}
+function makeConfetti(count=100){
+ const colors=['#ffeb3b','#00e5ff','#fff','#ff1744','#76ff03','#ff80ab','#ff9800'];
+ for(let i=0;i<count;i++){
+  const c=document.createElement('div');
+  c.className='confetti';
+  c.style.left=Math.random()*100+'vw';
+  c.style.background=colors[Math.floor(Math.random()*colors.length)];
+  c.style.animationDuration=(2+Math.random()*3)+'s';
+  c.style.animationDelay=(Math.random()*0.8)+'s';
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),6000);
+ }
+}
+function blowCandles(){
+ document.querySelectorAll('.flame').forEach(f=>f.style.display='none');
+ document.getElementById('blowBtn').disabled=true;
+ makeConfetti(160);
+ for(let i=0;i<12;i++){
+  setTimeout(()=>{
+   const p=document.createElement('div');
+   p.textContent='🎉';
+   p.style.position='fixed';
+   p.style.left=Math.random()*90+'vw';
+   p.style.top='55vh';
+   p.style.fontSize='32px';
+   p.style.zIndex='20';
+   p.style.pointerEvents='none';
+   p.style.transition='transform 1.2s,opacity 1.2s';
+   document.body.appendChild(p);
+   requestAnimationFrame(()=>{
+    p.style.transform=`translate(${(Math.random()-.5)*300}px,${-100-Math.random()*350}px) rotate(${Math.random()*500}deg)`;
+    p.style.opacity='0';
+   });
+   setTimeout(()=>p.remove(),1400);
+  },i*100);
+ }
+ setTimeout(()=>document.getElementById('cutBtn').style.display='inline-block',500);
+}
+function cutCake(){
+ document.getElementById('cake').classList.add('cut');
+ makeConfetti(100);
+ document.getElementById('cutBtn').disabled=true;
+ setTimeout(()=>document.getElementById('finalBtn').style.display='inline-block',800);
+}
+// Balloons keep falling in every stage.
+function createFallingBalloon(){
+ const b=document.createElement('div');
+ b.className='balloon';
+ const colors=['#ff1744','#ffeb3b','#ff80ab','#fff','#ff9100','#f50057'];
+ const color=colors[Math.floor(Math.random()*colors.length)];
+ b.style.background=color;
+ b.style.color=color;
+ b.style.left=Math.random()*100+'vw';
+ b.style.animationDuration=(7+Math.random()*7)+'s';
+ document.body.appendChild(b);
+ setTimeout(()=>b.remove(),15000);
+}
+setInterval(createFallingBalloon,450);
+for(let i=0;i<12;i++)setTimeout(createFallingBalloon,i*200);
+</script>
+</body>
+</html>
